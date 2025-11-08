@@ -20,7 +20,12 @@
       "Bash(taskkill:*)",
       "Bash(npm run build:*)",
       "Bash(npm run start:all:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Camel Up multiplayer board game\n\nFeatures:\n- Single player mode with AI support\n- Multiplayer online mode with rooms and real-time sync\n- Character system with unique skills\n- Advanced game mechanics (pyramid, betting, spectator tiles)\n- Beautiful UI with PixiJS rendering\n- Sound effects and background music\n- Game state persistence\n\n🐪 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

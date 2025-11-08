@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: camel-up-server
+    env: node
+    region: singapore
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production

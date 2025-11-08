@@ -17,8 +17,12 @@ class MultiplayerManager {
   private onPlayerLeftCallback: ((data: any) => void) | null = null;
   private onErrorCallback: ((error: string) => void) | null = null;
 
-  constructor(serverUrl: string = 'http://localhost:3001') {
-    this.serverUrl = serverUrl;
+  constructor(serverUrl?: string) {
+    // 优先使用传入的 URL，其次使用环境变量，最后使用默认值
+    this.serverUrl = serverUrl ||
+                     import.meta.env.VITE_SERVER_URL ||
+                     'http://localhost:3001';
+    console.log('MultiplayerManager 初始化，服务器地址:', this.serverUrl);
   }
 
   // 连接到服务器

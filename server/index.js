@@ -4,13 +4,44 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 
 const app = express();
-app.use(cors());
+
+// CORS 配置 - 支持生产环境
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://camel-up.vercel.app',
+  // 添加你的 Vercel 域名
+  process.env.FRONTEND_URL,
+].filter(Boolean);
+
+app.use(cors({
+  origin: (origin, callback) => {
+    // 允许没有 origin 的请求（如移动应用、Postman）
+    if (!origin) return callback(null, true);
+
+    // 检查是否在允许列表中，或者是 Vercel 预览部署
+    if (allowedOrigins.includes(origin) || origin.includes('.vercel.app')) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: '*',
-    methods: ['GET', 'POST']
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin) || origin.includes('.vercel.app')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
+    methods: ['GET', 'POST'],
+    credentials: true
   }
 });
 
@@ -308,8 +339,26 @@ io.on('connection', (socket) => {
   });
 });
 
+// 健康检查端点
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ok',
+    message: '🐪 Camel Up 多人游戏服务器正在运行',
+    version: '1.0.0',
+    uptime: process.uptime(),
+    rooms: rooms.size,
+    timestamp: new Date().toISOString()
+  });
+});
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'healthy' });
+});
+
 const PORT = process.env.PORT || 3001;
 httpServer.listen(PORT, () => {
   console.log(`🚀 多人游戏服务器运行在端口 ${PORT}`);
   console.log(`🎮 等待玩家连接...`);
+  console.log(`📡 WebSocket 端点: ws://localhost:${PORT}`);
+  console.log(`🌍 环境: ${process.env.NODE_ENV || 'development'}`);
 });
