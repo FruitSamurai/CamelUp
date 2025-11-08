@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:www.ultraboardgames.com)",
+      "WebFetch(domain:www.board-game.co.uk)",
+      "Bash(npm create:*)",
+      "Bash(npm init:*)",
+      "Bash(mv:*)",
+      "Bash(mv temp-project/.* .)",
+      "Bash(rm:*)",
+      "Bash(npm install:*)",
+      "Bash(mkdir:*)",
+      "Bash(tree:*)",
+      "Bash(npm run dev:*)",
+      "WebFetch(domain:cdn.1j1ju.com)",
+      "WebFetch(domain:fgbradleys.com)",
+      "Bash(cat:*)",
+      "Bash(netstat:*)",
+      "Bash(taskkill:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run start:all:*)",
+      "Bash(find:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
